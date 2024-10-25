@@ -14,15 +14,15 @@
 *\
 
 
-SVPC x1, 0
+SVPC x1, 0x0
 SUB x0, x0, x0      // ensure x0 contains the integer "0"
 INC x11, x11, -1    // n = n - 1 because there are only n-1 memory locations in a n length array
 INC x5, x0, 1       // x5 = 0 + 1 = 1. We use x5 as our iteration variable i.
 LD x6, x10          // x6 = arr[0] --> the rolling maximum
-INC x7, x10, 0      // x7 = &arr[0] --> the current element
-INC x12, x1, 32     // Set x12 to the address of the instruction (32 / 4 = 8) places past SVPC x1, 0 --> Loop
-INC x13, x1, 64     // Set x13 to the address of the instruction (64 / 4 = 16) places past SVPC x1, 0 --> LoopEnd
-INC x14, x1, 76     // Set x14 to the address of the instruction (76 / 4 = 19) places past SVPC x1, 0 --> FinishLoop
+INC x7, x10, 0x0    // x7 = &arr[0] --> the current element
+INC x12, x1, 0x20   // Set x12 to the address of the instruction 0x20 = 32 --> (32 / 4 = 8) places past SVPC x1, 0 --> Loop
+INC x13, x1, 0x40   // Set x13 to the address of the instruction 0x40 = 64 --> (64 / 4 = 16) places past SVPC x1, 0 --> LoopEnd
+INC x14, x1, 0x4c   // Set x14 to the address of the instruction 0x4c = 76 --> (76 / 4 = 19) places past SVPC x1, 0 --> FinishLoop
 
 // Loop
 SUB x15, x5, x11    // x15 = i - n
@@ -32,12 +32,12 @@ NEG x17, x6         // x17 = -max
 ADD x17, x16, x17   // x17 = arr[i] - max
 BRZ x14             // if arr[i] - max <= 0 --> max >= arr[i], go to FinishLoop. We do not need to update max.
 BRN x14             //
-INC x6, x16, 0      // max = arr[i]
+INC x6, x16, 0x0    // max = arr[i]
 
 // FinishLoop
-INC x5, x5, 1       // i++
-INC x7, x7, 4       // arr += sizeof(int)
+INC x5, x5, 0x1     // i++
+INC x7, x7, 0x4     // arr += sizeof(int)
 J x12               // next iteration of the for loop
 
 // LoopEnd
-INC x10, x6, 0     // return max
+INC x10, x6, 0x0    // return max
