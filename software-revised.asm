@@ -28,8 +28,7 @@ INC x14, x1, 76     // Set x14 to the address of the instruction (76 / 4 = 19) p
 SUB x15, x5, x11    // x15 = i - n
 BRZ x13             // if x15 is 0 --> i == n --> go to LoopEnd. We have checked every element.
 LD x16, x7          // x16 = arr[i]
-NEG x17, x6         // x17 = ~max
-INC x17, x17, 1     // x17 = -max. We know this is correct since SCU ISA uses 2's complement.
+NEG x17, x6         // x17 = -max
 ADD x17, x16, x17   // x17 = arr[i] - max
 BRZ x14             // if arr[i] - max <= 0 --> max >= arr[i], go to FinishLoop. We do not need to update max.
 BRN x14             //
